@@ -26,7 +26,7 @@ $(document).ready(function() {
                     risultati.lingua = recupero_ris[i].original_language;
                     risultati.voto = recupero_ris[i].vote_average;
                     console.log(risultati);
-                    $('.ris').append(risultati);
+                    $('.ris').text(risultati).append(risultati);
                 }
 
 
