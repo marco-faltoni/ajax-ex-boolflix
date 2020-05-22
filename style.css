@@ -8,26 +8,26 @@
 body {
     background-image: url('img/netlfix-backgorund.jpg');
     background-repeat: no-repeat;
-    background-size: cover;
-    min-height: 100vh;
+
 }
 
 
 .cont {
+    height: 100%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    align-content: center;
-    padding-top: 10px;
+    align-items: center;
     padding-right: 10px;
 }
 
 header {
     width: 100%;
-    height: 8vh;
+    height: 70px;
     background: #221f1f;
 }
-header img {
-    height: 50px;
+.logo {
+    height: 60px;
 }
 
 .input-group {
@@ -41,15 +41,16 @@ header img {
 
 main {
     width: 100%;
-    height: 92vh;
+    height: calc(100vh - 70px);
     background-color: #221f1f;
     opacity: 0.6;
+    overflow-y: auto;
 }
 
-.ris {
+.ris p {
     color: white;
+    opacity: 1;
 }
-
 
 @media all and (max-width: 530px) {
     .container {

@@ -7,7 +7,7 @@ $(document).ready(function() {
 
         var testo_utente = $('#message').val();
         var recupero_ris;
-        var risultati = {};
+
 
         $.ajax({
             'url':'https://api.themoviedb.org/3/search/movie',
@@ -21,12 +21,16 @@ $(document).ready(function() {
                 console.log(recupero_ris);
 
                 for (var i = 0; i < recupero_ris.length; i++) {
+                    var risultati = {};
                     risultati.titolo = recupero_ris[i].title;
                     risultati.titolo_originale = recupero_ris[i].original_title;
                     risultati.lingua = recupero_ris[i].original_language;
                     risultati.voto = recupero_ris[i].vote_average;
                     console.log(risultati);
-                    $('.ris').text(risultati).append(risultati);
+                    $('.ris').append('<p>'+ risultati.titolo +'</p>');
+                    $('.ris').append('<p>'+ risultati.titolo_originale +'</p>');
+                    $('.ris').append('<p>'+ risultati.lingua +'</p>');
+                    $('.ris').append('<p>'+ risultati.voto +'</p>');
                 }
 
 
