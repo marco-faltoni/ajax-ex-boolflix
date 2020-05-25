@@ -6,9 +6,11 @@
 }
 
 body {
-    background-image: url('img/netlfix-backgorund.jpg');
+    background-color: #221f1f;
+    /* background-image: url('img/netlfix-backgorund.jpg');
+    filter: opacity(0.6);
     background-repeat: no-repeat;
-
+    background-size: cover; */
 }
 
 
@@ -23,9 +25,11 @@ body {
 
 header {
     width: 100%;
-    height: 70px;
+    height: 100px;
+    position: fixed;
     background: #221f1f;
 }
+
 .logo {
     height: 60px;
 }
@@ -39,18 +43,38 @@ header {
     margin-bottom: 0 !important;
 }
 
-main {
-    width: 100%;
-    height: calc(100vh - 70px);
-    background-color: #221f1f;
-    opacity: 0.6;
+#wrapper {
+    padding: 150px 50px 50px;
     overflow-y: auto;
 }
 
-.ris p {
+.titolo-ricerca {
     color: white;
-    opacity: 1;
+    margin-bottom: 20px;
+    display: none;
 }
+
+.titolo-ricerca.visible {
+    display: block;
+}
+
+#results {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cards {
+    width: 200px;
+    color: white;
+    border: 1px solid white;
+    padding: 10px;
+    margin: 10px;
+    list-style-type: none;
+}
+
+
+
+
 
 @media all and (max-width: 530px) {
     .container {
