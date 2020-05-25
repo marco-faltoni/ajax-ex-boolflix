@@ -44,8 +44,14 @@ header {
 }
 
 #wrapper {
-    padding: 150px 50px 50px;
+    height: 100vh;
+    background-image: url('img/netlfix-backgorund.jpg');
+    background-size: cover;
     overflow-y: auto;
+}
+
+.wrap {
+    padding: 150px 50px 50px;
 }
 
 .titolo-ricerca {

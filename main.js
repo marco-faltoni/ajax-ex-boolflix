@@ -110,6 +110,8 @@ $(document).ready(function() {
             stella += "<i class="fas fa-star"></i>";
         }
 
+        var bandiere = []
+
         // preparo i dati per il template
         var placeholder = {
             'titolo': dati.title,
