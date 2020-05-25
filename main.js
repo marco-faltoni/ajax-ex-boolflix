@@ -56,6 +56,34 @@ $(document).ready(function() {
                     console.log('errore');
                 }
             });
+            // $.ajax({
+            //     'url': 'https://api.themoviedb.org/3/search/tv',
+            //     'method': 'GET',
+            //     'data': {
+            //         'api_key': '33f393bb2180fe0fa6a89d6419146443',
+            //         'query': testo_utente,
+            //     },
+            //     'success': function(risposta) {
+            //         // inserisco il testo cercato dall'utente nel titolo della pagina
+            //         $('#ricerca-utente').text(testo_utente);
+            //         // visualizzo il titolo della pagina
+            //         $('.titolo-ricerca').addClass('visible');
+            //
+            //         // recupero i risultati della ricerca
+            //         var risultati = risposta.results;
+            //         // ciclo su tutti i risultati
+            //         for (var i = 0; i < risultati.length; i++) {
+            //             // recupero il risultato corrente
+            //             var risultato_corrente = risultati[i];
+            //             disegno_card(risultato_corrente);
+            //         }
+            //     },
+            //     'error': function() {
+            //         console.log('errore');
+            //     }
+            // });
+
+
         } else {
             // l'utente ha digitato meno di 2 caratteri
             alert('devi digitare almeno 2 caratteri');
@@ -76,9 +104,10 @@ $(document).ready(function() {
 
     // funzione per appendere una card ai risultati
     function disegno_card(dati) {
-        var voto_arrotondato = Math.ceil((dati.vote_average / 2));
-        for (var i = 0; i < 5; i++) {
-
+        var voto_semplificato = Math.ceil((dati.vote_average / 2));
+        var stella;
+        for (var i = 0; i < voto_semplificato; i++) {
+            stella += "<i class="fas fa-star"></i>";
         }
 
         // preparo i dati per il template
@@ -86,7 +115,7 @@ $(document).ready(function() {
             'titolo': dati.title,
             'titolo_originale': dati.original_title,
             'lingua': dati.original_language,
-            'voto': dati.vote_average,
+            'voto': stella, //dati.vote_average,
         };
         var html_card = template(placeholder);
         // appendo la card con i dati del risultato corrente
