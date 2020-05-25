@@ -9,6 +9,7 @@
         <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+        <script src="https://kit.fontawesome.com/ccab3f3465.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
@@ -41,8 +42,8 @@
             <ul class="cards">
                 <li>{{ titolo }}</li>
                 <li>{{ titolo_originale }}</li>
-                <li>{{ lingua }}</li>
-                <li>{{ voto }}</li>
+                <li><span>{{{lingua}}}</span></li>
+                <li>{{{ voto }}}</li>
             </ul>
         </script>
         <i class="fas fa-star"></i>

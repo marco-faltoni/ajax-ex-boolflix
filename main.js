@@ -49,6 +49,7 @@ $(document).ready(function() {
                     for (var i = 0; i < risultati.length; i++) {
                         // recupero il risultato corrente
                         var risultato_corrente = risultati[i];
+                        console.log(risultato_corrente.original_language);
                         disegno_card(risultato_corrente);
                     }
                 },
@@ -56,32 +57,33 @@ $(document).ready(function() {
                     console.log('errore');
                 }
             });
-            // $.ajax({
-            //     'url': 'https://api.themoviedb.org/3/search/tv',
-            //     'method': 'GET',
-            //     'data': {
-            //         'api_key': '33f393bb2180fe0fa6a89d6419146443',
-            //         'query': testo_utente,
-            //     },
-            //     'success': function(risposta) {
-            //         // inserisco il testo cercato dall'utente nel titolo della pagina
-            //         $('#ricerca-utente').text(testo_utente);
-            //         // visualizzo il titolo della pagina
-            //         $('.titolo-ricerca').addClass('visible');
-            //
-            //         // recupero i risultati della ricerca
-            //         var risultati = risposta.results;
-            //         // ciclo su tutti i risultati
-            //         for (var i = 0; i < risultati.length; i++) {
-            //             // recupero il risultato corrente
-            //             var risultato_corrente = risultati[i];
-            //             disegno_card(risultato_corrente);
-            //         }
-            //     },
-            //     'error': function() {
-            //         console.log('errore');
-            //     }
-            // });
+
+            $.ajax({
+                'url': 'https://api.themoviedb.org/3/search/tv',
+                'method': 'GET',
+                'data': {
+                    'api_key': '33f393bb2180fe0fa6a89d6419146443',
+                    'query': testo_utente,
+                },
+                'success': function(risposta) {
+                    // inserisco il testo cercato dall'utente nel titolo della pagina
+                    $('#ricerca-utente').text(testo_utente);
+                    // visualizzo il titolo della pagina
+                    $('.titolo-ricerca').addClass('visible');
+
+                    // recupero i risultati della ricerca
+                    var risultati = risposta.results;
+                    // ciclo su tutti i risultati
+                    for (var i = 0; i < risultati.length; i++) {
+                        // recupero il risultato corrente
+                        var risultato_corrente = risultati[i];
+                        disegno_card(risultato_corrente);
+                    }
+                },
+                'error': function() {
+                    console.log('errore');
+                }
+            });
 
 
         } else {
@@ -104,32 +106,37 @@ $(document).ready(function() {
 
     // funzione per appendere una card ai risultati
     function disegno_card(dati) {
+        // Trasformiamo il voto da 1 a 10 decimale in un numero intero da 1 a 5, e lo arrotondo in eccesso
         var voto_semplificato = Math.ceil((dati.vote_average / 2));
-        var stella;
-        for (var i = 0; i < voto_semplificato; i++) {
-            stella += "<i class="fas fa-star"></i>";
-        }
+        console.log(voto_semplificato);
 
-        var bandiere = []
+
+        var stella = '';
+        for (var i = 1; i <= 5; i++) {
+            if (i <= voto_semplificato) {
+                stella += "<i class='fas fa-star'></i>";
+            } else {
+                stella += "<i class='far fa-star'></i>";
+            }
+        };
 
         // preparo i dati per il template
-        var placeholder = {
-            'titolo': dati.title,
-            'titolo_originale': dati.original_title,
-            'lingua': dati.original_language,
+        var place = {
+            'titolo': dati.title || dati.name,
+            'titolo_originale': dati.original_title || dati.original_name,
+            'lingua': function() {
+                var bandiere = ['it', 'en', 'fr', 'de', 'es', 'br'];
+                if (bandiere.includes(dati.original_language)) {
+                    return '<img src="flags/'+dati.original_language+'.png">'
+                } else {
+                    return dati.original_language;
+                }
+            },
             'voto': stella, //dati.vote_average,
         };
-        var html_card = template(placeholder);
+        var html_card = template(place);
         // appendo la card con i dati del risultato corrente
         $('#results').append(html_card);
-    }
-
+    };
 
 });
-
-// Milestone 2
-// Trasformiamo il voto da 1 a 10 decimale in un numero intero da 1 a 5, così da
-// permetterci di stampare a schermo un numero di stelle piene che vanno da 1 a 5,
-// lasciando le restanti vuote (troviamo le icone in FontAwesome).
-// Arrotondiamo sempre per eccesso all’unità successiva, non gestiamo icone mezze
-// piene (o mezze vuote :P)
