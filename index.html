@@ -30,24 +30,25 @@
 
         <div id="wrapper">
             <div class="wrap">
-                <h2 class="titolo-ricerca">
-                    Risultati ricerca per:<span id="ricerca-utente"></span>
-                </h2>
+                <h3 class="titolo-ricerca">Risultati ricerca per: <span id="ricerca-utente"></span></h2>
                 <main id="results"></main>
             </div>
         </div>
 
 
+
         <script id="card-template" type="text/x-handlebars-template">
-            <ul class="cards">
-                <li>{{ titolo }}</li>
-                <li>{{ titolo_originale }}</li>
-                <li><span>{{{lingua}}}</span></li>
-                <li>{{{ voto }}}</li>
-            </ul>
+            <div class="card text-white bg-dark mb-3">
+                <div class="card-header"><h5>Titolo: <span>{{ titolo }}</span></h5></div>
+                <div class="card-body">
+                    <h6 class="card-title">Titolo originale: <span>{{titolo_originale}}</span></h6>
+                    <h6 class="card-title">Tipo: <span></span></h6>
+                    <p class="card-text">Lingua: <span>{{{lingua}}}</span></p>
+                    <p class="card-text">Valutazione: <span>{{{ voto }}}</span></p>
+                </div>
+            </div>
         </script>
-        <i class="fas fa-star"></i>
-        <i class="far fa-star"></i>
+
         <script src="main.js" charset="utf-8"></script>
     </body>
 </html>

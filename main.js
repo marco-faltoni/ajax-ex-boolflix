@@ -11,7 +11,6 @@ $(document).ready(function() {
     // intercetto i tasti del campo di testo
     $('#message').keyup(function(event) {
         if(event.which == 13) {
-
             ricerca();
         }
     });
@@ -28,6 +27,7 @@ $(document).ready(function() {
 
         // controllo che l'utente abbia digitato qualcosa
         if(testo_utente.length > 1) {
+            
             reset_risultati();
 
             $.ajax({
@@ -36,6 +36,7 @@ $(document).ready(function() {
                 'data': {
                     'api_key': '33f393bb2180fe0fa6a89d6419146443',
                     'query': testo_utente,
+                    'language' : 'it',
                 },
                 'success': function(risposta) {
                     // inserisco il testo cercato dall'utente nel titolo della pagina
@@ -64,6 +65,7 @@ $(document).ready(function() {
                 'data': {
                     'api_key': '33f393bb2180fe0fa6a89d6419146443',
                     'query': testo_utente,
+                    'language' : 'it',
                 },
                 'success': function(risposta) {
                     // inserisco il testo cercato dall'utente nel titolo della pagina
@@ -90,7 +92,7 @@ $(document).ready(function() {
             // l'utente ha digitato meno di 2 caratteri
             alert('devi digitare almeno 2 caratteri');
         }
-    }
+    };
 
     // funzione per resettare la pagina e prepararla all'inserimento di nuovi risultati
     function reset_risultati() {
@@ -102,15 +104,12 @@ $(document).ready(function() {
         $('#results').empty();
         // $('#risultati .card').remove();
         // $('#risultati').html('');
-    }
+    };
 
     // funzione per appendere una card ai risultati
     function disegno_card(dati) {
         // Trasformiamo il voto da 1 a 10 decimale in un numero intero da 1 a 5, e lo arrotondo in eccesso
         var voto_semplificato = Math.ceil((dati.vote_average / 2));
-        console.log(voto_semplificato);
-
-
         var stella = '';
         for (var i = 1; i <= 5; i++) {
             if (i <= voto_semplificato) {
@@ -124,6 +123,14 @@ $(document).ready(function() {
         var place = {
             'titolo': dati.title || dati.name,
             'titolo_originale': dati.original_title || dati.original_name,
+            // 'tipo' : function () {
+            //
+            //     if ('titolo' == dati.title) {
+            //         return 'Movie'
+            //     } else {
+            //         return 'TV Series'
+            //     }
+            // },
             'lingua': function() {
                 var bandiere = ['it', 'en', 'fr', 'de', 'es', 'br'];
                 if (bandiere.includes(dati.original_language)) {
@@ -134,6 +141,7 @@ $(document).ready(function() {
             },
             'voto': stella, //dati.vote_average,
         };
+
         var html_card = template(place);
         // appendo la card con i dati del risultato corrente
         $('#results').append(html_card);
