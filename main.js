@@ -142,7 +142,7 @@ $(document).ready(function() {
     // }
 
     function images(poster) {
-        var immagine_rotta = "img/netflix_null.jpg";
+        var immagine_rotta = "img/netflix_null.png";
         if (poster != null) {
             var poster_value = 'https://image.tmdb.org/t/p/w342'+ poster;
             return poster_value
