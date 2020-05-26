@@ -116,13 +116,6 @@ $(document).ready(function() {
             'lingua': bandiere(dati.original_language),
             'voto': stelle(dati.vote_average),
             'poster': images(immagine),
-            // 'poster': function() {
-            //     if (poster_key == poster_key_broked) {
-            //         poster_key = 'Immagine rotta'
-            //     } else {
-            //         poster_key
-            //     }
-            // },
         };
         // riempo il template di handlebars
         var html_card = template(place);
