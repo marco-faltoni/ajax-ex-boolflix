@@ -50,7 +50,7 @@ $(document).ready(function() {
                         // recupero il risultato corrente
                         var risultato_corrente = risultati[i];
                         console.log(risultato_corrente.original_language);
-                        disegno_card(risultato_corrente, 'movie', risultato_corrente.poster_path);
+                        disegno_card(risultato_corrente, 'Film', risultato_corrente.poster_path);
                     }
                 },
                 'error': function() {
@@ -79,7 +79,7 @@ $(document).ready(function() {
                     for (var i = 0; i < risultati.length; i++) {
                         // recupero il risultato corrente
                         var risultato_corrente = risultati[i];
-                        disegno_card(risultato_corrente, 'tv series', risultato_corrente.poster_path);
+                        disegno_card(risultato_corrente, 'Serie Tv', risultato_corrente.poster_path);
                     }
                 },
                 'error': function() {
@@ -133,7 +133,7 @@ $(document).ready(function() {
     }
 
     function verifica_film_o_serie(data, tipo) {
-        if (tipo == 'movie') {
+        if (tipo == 'Film') {
             var tit_card = data.title;
             var tit_or_card = data.original_title;
             return tit_card
