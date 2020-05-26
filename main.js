@@ -50,7 +50,7 @@ $(document).ready(function() {
                         // recupero il risultato corrente
                         var risultato_corrente = risultati[i];
                         console.log(risultato_corrente.original_language);
-                        disegno_card(risultato_corrente, 'movie');
+                        disegno_card(risultato_corrente, 'movie', risultato_corrente.poster_path);
                     }
                 },
                 'error': function() {
@@ -79,7 +79,7 @@ $(document).ready(function() {
                     for (var i = 0; i < risultati.length; i++) {
                         // recupero il risultato corrente
                         var risultato_corrente = risultati[i];
-                        disegno_card(risultato_corrente, 'tv series');
+                        disegno_card(risultato_corrente, 'tv series', risultato_corrente.poster_path);
                     }
                 },
                 'error': function() {
@@ -106,29 +106,63 @@ $(document).ready(function() {
     };
 
     // funzione per appendere una card ai risultati
-    function disegno_card(dati, tipologia) {
+    function disegno_card(dati, tipologia, immagine) {
 
-        if (tipologia == 'movie') {
-            var tit_card = dati.title;
-            var tit_or_card = dati.original_title;
-        } else {
-            var tit_card = dati.name;
-            var tit_or_card = dati.original_name;
-        }
-        
         // preparo i dati per il template
         var place = {
-            'titolo': tit_card,
-            'titolo_originale': tit_or_card,
+            'titolo': verifica_film_o_serie(dati, tipologia),
+            'titolo_originale': verifica_film_o_serie(dati, tipologia),
             'tipo' : tipologia,
             'lingua': bandiere(dati.original_language),
             'voto': stelle(dati.vote_average),
+            'poster': images(immagine),
+            // 'poster': function() {
+            //     if (poster_key == poster_key_broked) {
+            //         poster_key = 'Immagine rotta'
+            //     } else {
+            //         poster_key
+            //     }
+            // },
         };
-
+        // riempo il template di handlebars
         var html_card = template(place);
         // appendo la card con i dati del risultato corrente
         $('#results').append(html_card);
     };
+
+    // function img(immagine) {
+    //     var url_finale = "img/img_null.jpg"
+    //     if (immagine != null) {
+    //         var init_url_img = "https://image.tmdb.org/t/p/"
+    //         var width_img = "w154"
+    //         var url_img_specifico = immagine;
+    //         var url_finale = init_url_img + width_img + url_img_specifico;
+    //     }
+    //     return url_finale
+    // }
+
+    function images(poster) {
+        var immagine_rotta = "img/netflix_null.jpg";
+        if (poster != null) {
+            var poster_value = 'https://image.tmdb.org/t/p/w342'+ poster;
+            return poster_value
+        }
+        return immagine_rotta
+    }
+
+    function verifica_film_o_serie(data, tipo) {
+        if (tipo == 'movie') {
+            var tit_card = data.title;
+            var tit_or_card = data.original_title;
+            return tit_card
+            return tit_or_card
+        } else {
+            var tit_card = data.name;
+            var tit_or_card = data.original_name;
+            return tit_card
+            return tit_or_card
+        }
+    }
 
     function bandiere(lang){
         // creo array con dentro le bandiere che possiedo
@@ -139,7 +173,7 @@ $(document).ready(function() {
         } else {
             return lang;
         }
-    }
+    };
 
     function stelle(numero_data) {
         // Trasformiamo il voto da 1 a 10 decimale in un numero intero da 1 a 5, e lo arrotondo in eccesso
@@ -153,7 +187,7 @@ $(document).ready(function() {
             }
         }
         return stella
-    }
+    };
 
 
 });
