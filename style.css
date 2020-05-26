@@ -78,6 +78,7 @@ header {
     height: 500px;
     margin: 20px 10px;
     background-color: #221f1f!important;
+    transition: all ease 0.7s;
 }
 
 .poster {
@@ -93,14 +94,23 @@ header {
 }
 
 .poster:hover {
-
     opacity: 0.1;
+}
+
+.card:hover {
+    transform: scale(1.05);
 }
 
 .overview {
     max-height: 220px;
     overflow-y: hidden;
     text-overflow: ellipsis;
+}
+
+.fade-down {
+    background: -webkit-linear-gradient( #ffffff, #ededed, #221f1f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 h6, p {

@@ -125,9 +125,17 @@ $(document).ready(function() {
             'voto': stelle(dati.vote_average),
             'poster': images(immagine),
             'overview': overview(dati.overview),
+            // 'cast':
         };
         // riempo il template di handlebars
         var html_card = template(place);
+
+        $('.overview').each(function() {
+            if ($(this).children('span').text() != 'Non disponibile') {
+                $(this).addClass('fade-down')
+            }
+        });
+
         // appendo la card con i dati del risultato corrente
         $('#results').append(html_card);
     };
@@ -142,9 +150,10 @@ $(document).ready(function() {
 
     function overview(testo) {
         if (testo == '') {
-            return 'riassunto non disponibile'
+            return 'Non disponibile'
         }
         return testo
+
     }
 
     function bandiere(lang){
