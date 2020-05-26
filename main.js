@@ -130,9 +130,10 @@ $(document).ready(function() {
         // riempo il template di handlebars
         var html_card = template(place);
 
-        // aggiungo la classe che mi permette di sfumare il riassunto del film
+        // aggiungo la classe che mi permette di sfumare il riassunto del film se questo prende l'intera altezza del contenuto
         $('.overview').each(function() {
-            if ($(this).children('span').text() != 'Non disponibile') {
+            var modHeight = 180;
+            if ($(this).outerHeight() == modHeight) {
                 $(this).addClass('fade-down')
             }
         });
