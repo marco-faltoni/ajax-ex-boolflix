@@ -130,17 +130,6 @@ $(document).ready(function() {
         $('#results').append(html_card);
     };
 
-    // function img(immagine) {
-    //     var url_finale = "img/img_null.jpg"
-    //     if (immagine != null) {
-    //         var init_url_img = "https://image.tmdb.org/t/p/"
-    //         var width_img = "w154"
-    //         var url_img_specifico = immagine;
-    //         var url_finale = init_url_img + width_img + url_img_specifico;
-    //     }
-    //     return url_finale
-    // }
-
     function images(poster) {
         var immagine_rotta = "img/netflix_null.png";
         if (poster != null) {
