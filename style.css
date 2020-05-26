@@ -102,7 +102,7 @@ header {
 }
 
 .overview {
-    max-height: 220px;
+    max-height: 180px;
     overflow-y: hidden;
     text-overflow: ellipsis;
 }
@@ -124,12 +124,6 @@ h5 span {
 @media all and (max-width: 320px) {
     .overview {
         max-height: 110px;
-    }
-};
-
-@media all and (min-width: 321px) and (max-width: 390px) {
-    .overview {
-        max-height: 180px;
     }
 };
 

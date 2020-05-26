@@ -130,6 +130,7 @@ $(document).ready(function() {
         // riempo il template di handlebars
         var html_card = template(place);
 
+        // aggiungo la classe che mi permette di sfumare il riassunto del film
         $('.overview').each(function() {
             if ($(this).children('span').text() != 'Non disponibile') {
                 $(this).addClass('fade-down')
