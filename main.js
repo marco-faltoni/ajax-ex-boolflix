@@ -79,7 +79,7 @@ $(document).ready(function() {
                     for (var i = 0; i < risultati.length; i++) {
                         // recupero il risultato corrente
                         var risultato_corrente = risultati[i];
-                        disegno_card(risultato_corrente, 'Serie Tv', risultato_corrente.poster_path, risultato_corrente.overview);
+                        disegno_card(risultato_corrente, 'Serie Tv', risultato_corrente.poster_path);
                     }
                 },
                 'error': function() {
@@ -108,10 +108,18 @@ $(document).ready(function() {
     // funzione per appendere una card ai risultati
     function disegno_card(dati, tipologia, immagine) {
 
+        if (tipologia == 'Film') {
+            var tit_card = dati.title;
+            var tit_or_card = dati.original_title;
+        } else {
+            var tit_card = dati.name;
+            var tit_or_card = dati.original_name;
+        }
+
         // preparo i dati per il template
         var place = {
-            'titolo': verifica_film_o_serie(dati, tipologia),
-            'titolo_originale': verifica_film_o_serie(dati, tipologia),
+            'titolo': tit_card,
+            'titolo_originale': tit_or_card,
             'tipo' : tipologia,
             'lingua': bandiere(dati.original_language),
             'voto': stelle(dati.vote_average),
@@ -125,12 +133,11 @@ $(document).ready(function() {
     };
 
     function images(poster) {
-        var immagine_rotta = "img/netflix_null.png";
-        if (poster != null) {
-            var poster_value = 'https://image.tmdb.org/t/p/w342'+ poster;
-            return poster_value
+        var immagine = "img/netflix_null.png";
+        if (poster) {
+            immagine = 'https://image.tmdb.org/t/p/w342'+ poster;
         }
-        return immagine_rotta
+        return immagine
     }
 
     function overview(testo) {
@@ -138,20 +145,6 @@ $(document).ready(function() {
             return 'riassunto non disponibile'
         }
         return testo
-    }
-
-    function verifica_film_o_serie(data, tipo) {
-        if (tipo == 'Film') {
-            var tit_card = data.title;
-            var tit_or_card = data.original_title;
-            return tit_card
-            return tit_or_card
-        } else {
-            var tit_card = data.name;
-            var tit_or_card = data.original_name;
-            return tit_card
-            return tit_or_card
-        }
     }
 
     function bandiere(lang){
@@ -179,5 +172,18 @@ $(document).ready(function() {
         return stella
     };
 
+    // function verifica_film_o_serie(data, tipo) {
+    //     if (tipo == 'Film') {
+    //         var tit_card = data.title;
+    //         var tit_or_card = data.original_title;
+    //         return tit_card
+    //         return tit_or_card
+    //     } else {
+    //         var tit_card = data.name;
+    //         var tit_or_card = data.original_name;
+    //         return tit_card
+    //         return tit_or_card
+    //     }
+    // }
 
 });

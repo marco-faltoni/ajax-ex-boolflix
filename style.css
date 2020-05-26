@@ -92,7 +92,7 @@ header {
 
 .poster:hover {
     transition: all ease 0.7s;
-    opacity: 0;
+    opacity: 0.1;
 }
 
 .overview {
@@ -109,6 +109,17 @@ h5 span {
     font-weight: 700;
 }
 
+@media all and (max-width: 320px) {
+    .overview {
+        max-height: 110px;
+    }
+};
+
+@media all and (min-width: 321px) and (max-width: 390px) {
+    .overview {
+        max-height: 180px;
+    }
+};
 
 @media all and (min-width: 1040px) {
     .input-group {
