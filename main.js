@@ -1,7 +1,5 @@
 // Milestone   1: Creare un layout base con una searchbar (una   input   e   un   button) in cui   possiamo scrivere  completamente  o  parzialmente  il   nome   di   un   film.   Possiamo,   cliccando   il bottone,   cercare   sull’API   tutti   i   film   che   contengono   ciò   che   ha   scritto   l’utente. Vogliamo   dopo   la   risposta   dell’API   visualizzare   a   schermo   i   seguenti   valori   per   ogni film   trovato: 1.Titolo 2.Titolo   Originale 3.Lingua 4.Voto
 
-
-
 $(document).ready(function() {
 
     // preparo le variabili per handlebars
@@ -27,7 +25,7 @@ $(document).ready(function() {
 
         // controllo che l'utente abbia digitato qualcosa
         if(testo_utente.length > 1) {
-            
+
             reset_risultati();
 
             $.ajax({
@@ -46,12 +44,13 @@ $(document).ready(function() {
 
                     // recupero i risultati della ricerca
                     var risultati = risposta.results;
+                    console.log(risultati);
                     // ciclo su tutti i risultati
                     for (var i = 0; i < risultati.length; i++) {
                         // recupero il risultato corrente
                         var risultato_corrente = risultati[i];
                         console.log(risultato_corrente.original_language);
-                        disegno_card(risultato_corrente);
+                        disegno_card(risultato_corrente, 'movie');
                     }
                 },
                 'error': function() {
@@ -75,18 +74,18 @@ $(document).ready(function() {
 
                     // recupero i risultati della ricerca
                     var risultati = risposta.results;
+                    console.log(risultati);
                     // ciclo su tutti i risultati
                     for (var i = 0; i < risultati.length; i++) {
                         // recupero il risultato corrente
                         var risultato_corrente = risultati[i];
-                        disegno_card(risultato_corrente);
+                        disegno_card(risultato_corrente, 'tv series');
                     }
                 },
                 'error': function() {
                     console.log('errore');
                 }
             });
-
 
         } else {
             // l'utente ha digitato meno di 2 caratteri
@@ -107,9 +106,44 @@ $(document).ready(function() {
     };
 
     // funzione per appendere una card ai risultati
-    function disegno_card(dati) {
+    function disegno_card(dati, tipologia) {
+
+        if (tipologia == 'movie') {
+            var tit_card = dati.title;
+            var tit_or_card = dati.original_title;
+        } else {
+            var tit_card = dati.name;
+            var tit_or_card = dati.original_name;
+        }
+        
+        // preparo i dati per il template
+        var place = {
+            'titolo': tit_card,
+            'titolo_originale': tit_or_card,
+            'tipo' : tipologia,
+            'lingua': bandiere(dati.original_language),
+            'voto': stelle(dati.vote_average),
+        };
+
+        var html_card = template(place);
+        // appendo la card con i dati del risultato corrente
+        $('#results').append(html_card);
+    };
+
+    function bandiere(lang){
+        // creo array con dentro le bandiere che possiedo
+        var bandiere = ['it', 'en', 'fr', 'de', 'es', 'br'];
+        // creo condizione: nel caso le bandiere che sono incluse nei dati delle bandiere, faccio return delle mie immagini
+        if (bandiere.includes(lang)) {
+            return '<img src="flags/'+ lang +'.png">'
+        } else {
+            return lang;
+        }
+    }
+
+    function stelle(numero_data) {
         // Trasformiamo il voto da 1 a 10 decimale in un numero intero da 1 a 5, e lo arrotondo in eccesso
-        var voto_semplificato = Math.ceil((dati.vote_average / 2));
+        var voto_semplificato = Math.ceil((numero_data / 2));
         var stella = '';
         for (var i = 1; i <= 5; i++) {
             if (i <= voto_semplificato) {
@@ -117,34 +151,9 @@ $(document).ready(function() {
             } else {
                 stella += "<i class='far fa-star'></i>";
             }
-        };
+        }
+        return stella
+    }
 
-        // preparo i dati per il template
-        var place = {
-            'titolo': dati.title || dati.name,
-            'titolo_originale': dati.original_title || dati.original_name,
-            // 'tipo' : function () {
-            //
-            //     if ('titolo' == dati.title) {
-            //         return 'Movie'
-            //     } else {
-            //         return 'TV Series'
-            //     }
-            // },
-            'lingua': function() {
-                var bandiere = ['it', 'en', 'fr', 'de', 'es', 'br'];
-                if (bandiere.includes(dati.original_language)) {
-                    return '<img src="flags/'+dati.original_language+'.png">'
-                } else {
-                    return dati.original_language;
-                }
-            },
-            'voto': stella, //dati.vote_average,
-        };
-
-        var html_card = template(place);
-        // appendo la card con i dati del risultato corrente
-        $('#results').append(html_card);
-    };
 
 });
