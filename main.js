@@ -79,7 +79,7 @@ $(document).ready(function() {
                     for (var i = 0; i < risultati.length; i++) {
                         // recupero il risultato corrente
                         var risultato_corrente = risultati[i];
-                        disegno_card(risultato_corrente, 'Serie Tv', risultato_corrente.poster_path);
+                        disegno_card(risultato_corrente, 'Serie Tv', risultato_corrente.poster_path, risultato_corrente.overview);
                     }
                 },
                 'error': function() {
@@ -116,6 +116,7 @@ $(document).ready(function() {
             'lingua': bandiere(dati.original_language),
             'voto': stelle(dati.vote_average),
             'poster': images(immagine),
+            'overview': overview(dati.overview),
         };
         // riempo il template di handlebars
         var html_card = template(place);
@@ -130,6 +131,13 @@ $(document).ready(function() {
             return poster_value
         }
         return immagine_rotta
+    }
+
+    function overview(testo) {
+        if (testo == '') {
+            return 'riassunto non disponibile'
+        }
+        return testo
     }
 
     function verifica_film_o_serie(data, tipo) {
