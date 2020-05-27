@@ -52,6 +52,8 @@ $(document).ready(function() {
                         console.log(risultato_corrente.original_language);
                         disegno_card(risultato_corrente, 'Film', risultato_corrente.poster_path);
                     }
+                    
+                    sfumo_riassunto()
                 },
                 'error': function() {
                     console.log('errore');
@@ -81,6 +83,8 @@ $(document).ready(function() {
                         var risultato_corrente = risultati[i];
                         disegno_card(risultato_corrente, 'Serie Tv', risultato_corrente.poster_path);
                     }
+
+                    sfumo_riassunto()
                 },
                 'error': function() {
                     console.log('errore');
@@ -130,6 +134,11 @@ $(document).ready(function() {
         // riempo il template di handlebars
         var html_card = template(place);
 
+        // appendo la card con i dati del risultato corrente
+        $('#results').append(html_card);
+    };
+
+    function sfumo_riassunto() {
         // aggiungo la classe che mi permette di sfumare il riassunto del film se questo prende l'intera altezza del contenuto
         $('.overview').each(function() {
             var modHeight = 180;
@@ -137,9 +146,6 @@ $(document).ready(function() {
                 $(this).addClass('fade-down')
             }
         });
-
-        // appendo la card con i dati del risultato corrente
-        $('#results').append(html_card);
     };
 
     function images(poster) {
@@ -148,7 +154,7 @@ $(document).ready(function() {
             immagine = 'https://image.tmdb.org/t/p/w342'+ poster;
         }
         return immagine
-    }
+    };
 
     function overview(testo) {
         if (testo == '') {
@@ -156,7 +162,7 @@ $(document).ready(function() {
         }
         return testo
 
-    }
+    };
 
     function bandiere(lang){
         // creo array con dentro le bandiere che possiedo
