@@ -158,7 +158,7 @@ $(document).ready(function() {
             'success': function (nomi) {
                 var cast_array = nomi.cast;
                 console.log(risultati);
-                
+
             },
             'error': function() {
                 console.log('errore nella chiamata');
@@ -181,18 +181,10 @@ $(document).ready(function() {
     // funzione per appendere una card ai risultati
     function disegno_card(dati, tipologia, immagine) {
 
-        if (tipologia == 'Film') {
-            var tit_card = dati.title;
-            var tit_or_card = dati.original_title;
-        } else {
-            var tit_card = dati.name;
-            var tit_or_card = dati.original_name;
-        }
-
         // preparo i dati per il template
         var place = {
-            'titolo': tit_card,
-            'titolo_originale': tit_or_card,
+            'titolo': verifica_film(dati, tipologia),
+            'titolo_originale': verifica_serie(dati, tipologia),
             'tipo' : tipologia,
             'lingua': bandiere(dati.original_language),
             'voto': stelle(dati.vote_average),
@@ -258,18 +250,28 @@ $(document).ready(function() {
         return stella
     };
 
-    // function verifica_film_o_serie(data, tipo) {
-    //     if (tipo == 'Film') {
-    //         var tit_card = data.title;
-    //         var tit_or_card = data.original_title;
-    //         return tit_card
-    //         return tit_or_card
-    //     } else {
-    //         var tit_card = data.name;
-    //         var tit_or_card = data.original_name;
-    //         return tit_card
-    //         return tit_or_card
-    //     }
-    // }
+    function verifica_film(data, tipo) {
+        var tit_card
+
+        if (tipo == 'Film') {
+            tit_card = data.title;
+            return tit_card
+        } else {
+            tit_card = data.name;
+            return tit_card
+        }
+    }
+
+    function verifica_serie(data, tipo) {
+        var tit_or_card
+
+        if (tipo == 'Film') {
+            tit_or_card = data.original_title;
+            return tit_or_card
+        } else {
+            tit_or_card = data.original_name;
+            return tit_or_card
+        }
+    }
 
 });
