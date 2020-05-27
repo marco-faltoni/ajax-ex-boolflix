@@ -118,10 +118,10 @@ $(document).ready(function() {
                 'api_key': '33f393bb2180fe0fa6a89d6419146443',
             },
             'success': function (nomi) {
-                var cast_array = nomi.cast;
+                var cast = nomi.cast;
                 // console.log(cast_array);
                 // ciclo su tutti i risultati
-                actor(cast_array);
+                actor(cast, id);
             },
             'error': function() {
                 console.log('errore nella chiamata');
@@ -130,19 +130,28 @@ $(document).ready(function() {
 
     }
 
-    function actor(cast) {
+    function actor(cast, id) {
 
         var thisfilm;
         var nameactor;
+        console.log('film ' + id);
+        var num = 5;
 
-        for (var i = 0; i < 5; i++) {
+        if (cast.length < num) {
+            num = cast.length
+        }
+
+        for (var i = 0; i < num; i++) {
             // recupero il risultato corrente
             thisfilm = cast[i];
             nameactor = thisfilm.name;
             console.log(nameactor);
             // actors.push(nameactor);
         }
-        // $('.cast span').text(nameactor)
+
+        // $('.cast span').each(function(){
+        //     $(this).text(nameactor)
+        // })
 
     }
 
@@ -194,7 +203,7 @@ $(document).ready(function() {
             'voto': stelle(dati.vote_average),
             'poster': images(immagine),
             'overview': overview(dati.overview),
-            // 'cast':
+            // 'attori': 
         };
         // riempo il template di handlebars
         var html_card = template(place);
