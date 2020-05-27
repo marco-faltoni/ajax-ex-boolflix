@@ -50,9 +50,8 @@ $(document).ready(function() {
                         // recupero il risultato corrente
                         var risultato_corrente = risultati[i];
 
-                        disegno_card(risultato_corrente, 'Film', risultato_corrente.poster_path);
+                        disegno_card(risultato_corrente, 'Film', risultato_corrente.poster_path, risultato_corrente.id);
 
-                        takeIDfilm_takeCast(risultato_corrente.id);
                     }
 
                     sfumo_riassunto()
@@ -84,9 +83,9 @@ $(document).ready(function() {
                         // recupero il risultato corrente
                         var risultato_corrente = risultati[i];
 
-                        disegno_card(risultato_corrente, 'Serie Tv', risultato_corrente.poster_path);
+                        disegno_card(risultato_corrente, 'Serie Tv', risultato_corrente.poster_path, risultato_corrente.id);
 
-                        takeIDtv_takeCast(risultato_corrente.id);
+                        // takeIDtv_takeCast(risultato_corrente.id);
                     }
 
                     sfumo_riassunto()
@@ -102,23 +101,27 @@ $(document).ready(function() {
         }
     };
 
-    function takeIDfilm_takeCast(film){
-        var id,
-        id = film
-        console.log(id);
+    function takeIDfilm_takeCast(tipo, id){
+        var url
+        // console.log(tipo, id);
+
+        if (tipo == 'Film') {
+            url = 'https://api.themoviedb.org/3/movie/'+ id + '/credits'
+        } else {
+            url = 'https://api.themoviedb.org/3/tv/'+ id + '/credits'
+        }
 
         $.ajax({
-            'url': 'https://api.themoviedb.org/3/movie/'+ id + '/credits',
+            'url': url,
             'method': 'GET',
             'data': {
                 'api_key': '33f393bb2180fe0fa6a89d6419146443',
             },
             'success': function (nomi) {
                 var cast_array = nomi.cast;
-                console.log(risultati);
+                // console.log(cast_array);
                 // ciclo su tutti i risultati
                 actor(cast_array);
-
             },
             'error': function() {
                 console.log('errore nella chiamata');
@@ -129,42 +132,42 @@ $(document).ready(function() {
 
     function actor(cast) {
 
-        var actors =[]
         var thisfilm;
         var nameactor;
 
-        for (var i = 0; i < cast.length; i++) {
+        for (var i = 0; i < 5; i++) {
             // recupero il risultato corrente
             thisfilm = cast[i];
             nameactor = thisfilm.name;
-            actors.push(nameactor);
+            console.log(nameactor);
+            // actors.push(nameactor);
         }
+        // $('.cast span').text(nameactor)
 
-        return actors
     }
 
-    function takeIDtv_takeCast(tv) {
-
-        var id,
-        id = tv
-        console.log(id);
-
-        $.ajax({
-            'url': 'https://api.themoviedb.org/3/tv/'+ id + '/credits',
-            'method': 'GET',
-            'data': {
-                'api_key': '33f393bb2180fe0fa6a89d6419146443',
-            },
-            'success': function (nomi) {
-                var cast_array = nomi.cast;
-                console.log(risultati);
-
-            },
-            'error': function() {
-                console.log('errore nella chiamata');
-            }
-        });
-    }
+    // function takeIDtv_takeCast(tv) {
+    //
+    //     var id,
+    //     id = tv
+    //     console.log(id);
+    //
+    //     $.ajax({
+    //         'url': 'https://api.themoviedb.org/3/tv/'+ id + '/credits',
+    //         'method': 'GET',
+    //         'data': {
+    //             'api_key': '33f393bb2180fe0fa6a89d6419146443',
+    //         },
+    //         'success': function (nomi) {
+    //             var cast_array = nomi.cast;
+    //             console.log(cast_array);
+    //
+    //         },
+    //         'error': function() {
+    //             console.log('errore nella chiamata');
+    //         }
+    //     });
+    // }
 
     // funzione per resettare la pagina e prepararla all'inserimento di nuovi risultati
     function reset_risultati() {
@@ -179,7 +182,8 @@ $(document).ready(function() {
     };
 
     // funzione per appendere una card ai risultati
-    function disegno_card(dati, tipologia, immagine) {
+    function disegno_card(dati, tipologia, immagine, filmid) {
+
 
         // preparo i dati per il template
         var place = {
@@ -195,6 +199,7 @@ $(document).ready(function() {
         // riempo il template di handlebars
         var html_card = template(place);
 
+        takeIDfilm_takeCast(tipologia, filmid);
         // appendo la card con i dati del risultato corrente
         $('#results').append(html_card);
     };
