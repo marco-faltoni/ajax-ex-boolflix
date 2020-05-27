@@ -102,7 +102,7 @@ header {
 }
 
 .overview {
-    max-height: 180px;
+    max-height: 127px;
     overflow-y: hidden;
     text-overflow: ellipsis;
 }

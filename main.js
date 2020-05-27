@@ -101,83 +101,6 @@ $(document).ready(function() {
         }
     };
 
-    function takeIDfilm_takeCast(tipo, id){
-        var url
-        // console.log(tipo, id);
-
-        if (tipo == 'Film') {
-            url = 'https://api.themoviedb.org/3/movie/'+ id + '/credits'
-        } else {
-            url = 'https://api.themoviedb.org/3/tv/'+ id + '/credits'
-        }
-
-        $.ajax({
-            'url': url,
-            'method': 'GET',
-            'data': {
-                'api_key': '33f393bb2180fe0fa6a89d6419146443',
-            },
-            'success': function (nomi) {
-                var cast = nomi.cast;
-                // console.log(cast_array);
-                // ciclo su tutti i risultati
-                actor(cast, id);
-            },
-            'error': function() {
-                console.log('errore nella chiamata');
-            }
-        });
-
-    }
-
-    function actor(cast, id) {
-
-        var thisfilm;
-        var nameactor;
-        console.log('film ' + id);
-        var num = 5;
-
-        if (cast.length < num) {
-            num = cast.length
-        }
-
-        for (var i = 0; i < num; i++) {
-            // recupero il risultato corrente
-            thisfilm = cast[i];
-            nameactor = thisfilm.name;
-            console.log(nameactor);
-            // actors.push(nameactor);
-        }
-
-        // $('.cast span').each(function(){
-        //     $(this).text(nameactor)
-        // })
-
-    }
-
-    // function takeIDtv_takeCast(tv) {
-    //
-    //     var id,
-    //     id = tv
-    //     console.log(id);
-    //
-    //     $.ajax({
-    //         'url': 'https://api.themoviedb.org/3/tv/'+ id + '/credits',
-    //         'method': 'GET',
-    //         'data': {
-    //             'api_key': '33f393bb2180fe0fa6a89d6419146443',
-    //         },
-    //         'success': function (nomi) {
-    //             var cast_array = nomi.cast;
-    //             console.log(cast_array);
-    //
-    //         },
-    //         'error': function() {
-    //             console.log('errore nella chiamata');
-    //         }
-    //     });
-    // }
-
     // funzione per resettare la pagina e prepararla all'inserimento di nuovi risultati
     function reset_risultati() {
         // resetto l'input testuale
@@ -193,37 +116,93 @@ $(document).ready(function() {
     // funzione per appendere una card ai risultati
     function disegno_card(dati, tipologia, immagine, filmid) {
 
-
         // preparo i dati per il template
         var place = {
-            'titolo': verifica_film(dati, tipologia),
-            'titolo_originale': verifica_serie(dati, tipologia),
+            'titolo': verifica_titolo(dati, tipologia),
+            'titolo_originale': verifica_titolo_originale(dati, tipologia),
             'tipo' : tipologia,
             'lingua': bandiere(dati.original_language),
             'voto': stelle(dati.vote_average),
             'poster': images(immagine),
             'overview': overview(dati.overview),
-            // 'attori': 
+            'id': filmid
         };
         // riempo il template di handlebars
         var html_card = template(place);
-
-        takeIDfilm_takeCast(tipologia, filmid);
         // appendo la card con i dati del risultato corrente
         $('#results').append(html_card);
+        // richiamo funzione che mi prende id e tipologia è li smista
+        takeID_takeCast(tipologia, filmid);
     };
 
-    function sfumo_riassunto() {
-        // aggiungo la classe che mi permette di sfumare il riassunto del film se questo prende l'intera altezza del contenuto
-        $('.overview').each(function() {
-            var modHeight = 180;
-            if ($(this).outerHeight() == modHeight) {
-                $(this).addClass('fade-down')
+    // funzione che mi prende id e tipologia è li smista
+    function takeID_takeCast(tipo, id){
+        // creo variabile url che vado a riempire a secondo che abbia film o serie tv
+        var url
+        // console.log(tipo, id);
+
+        // se la tipologia è film, l'url sarà composto dall'id del film
+        if (tipo == 'Film') {
+            url = 'https://api.themoviedb.org/3/movie/'+ id + '/credits'
+        } else {
+            url = 'https://api.themoviedb.org/3/tv/'+ id + '/credits'
+        }
+
+        // chiamata ajax che sarà fatta in base all'url di prima
+        $.ajax({
+            'url': url,
+            'method': 'GET',
+            'data': {
+                'api_key': '33f393bb2180fe0fa6a89d6419146443',
+            },
+            'success': function (nomi) {
+                var cast = nomi.cast;
+                // console.log(cast_array);
+                // richiamo la funzione che mi recupera gli attori e li stampa
+                actors(cast, id);
+            },
+            'error': function() {
+                console.log('errore nella chiamata');
             }
         });
-    };
 
+    }
+
+    // funzione che mi recupera gli attori e li stampa
+    function actors(cast, id) {
+        // creo due variabili che mi servono nel ciclo for
+        var thisfilm;
+        var nameactor;
+
+        // console.log('film ' + id);
+
+        // creo variabile con valore 5 perchè mi servono massimo 5 attori
+        var num = 5;
+
+        // imposto la condizione di partenza del ciclo; parte solo se la lunghezza del cast è minore alla variabile scritta prima
+        if (cast.length < num) {
+            num = cast.length
+        }
+
+        // imposto la condizione che se il cast è vuoto, appendo in pagina la scritta "non disponibile"
+        if (num == 0) {
+            $('.cast[data-id='+id+']').append('non disponibile');
+        }
+
+        for (var i = 0; i < num; i++) {
+
+            thisfilm = cast[i];
+            nameactor = thisfilm.name;
+            // console.log(nameactor);
+            // appendo ogni volta i nomi degli attori, li associo grazie all'id
+            $('.cast[data-id='+id+']').children('span').append(nameactor + ', ')
+        }
+
+    }
+
+    // funzione che mi gestisce le immagini
     function images(poster) {
+        // creo var con locandina non disponibile, la ridò indietro se non c'è valore null
         var immagine = "img/netflix_null.png";
         if (poster) {
             immagine = 'https://image.tmdb.org/t/p/w342'+ poster;
@@ -231,6 +210,7 @@ $(document).ready(function() {
         return immagine
     };
 
+    // funzione che mi gestisce i riassunti
     function overview(testo) {
         if (testo == '') {
             return 'Non disponibile'
@@ -239,6 +219,7 @@ $(document).ready(function() {
 
     };
 
+    // funzione che mi gestisce le bandiere
     function bandiere(lang){
         // creo array con dentro le bandiere che possiedo
         var bandiere = ['it', 'en', 'fr', 'de', 'es', 'br'];
@@ -250,6 +231,7 @@ $(document).ready(function() {
         }
     };
 
+    // funzione che mi gestisce le stelle
     function stelle(numero_data) {
         // Trasformiamo il voto da 1 a 10 decimale in un numero intero da 1 a 5, e lo arrotondo in eccesso
         var voto_semplificato = Math.ceil((numero_data / 2));
@@ -264,7 +246,8 @@ $(document).ready(function() {
         return stella
     };
 
-    function verifica_film(data, tipo) {
+    // funzione che mi verifica se il titolo è del film o della serietv
+    function verifica_titolo(data, tipo) {
         var tit_card
 
         if (tipo == 'Film') {
@@ -276,7 +259,8 @@ $(document).ready(function() {
         }
     }
 
-    function verifica_serie(data, tipo) {
+    // funzione che mi verifica se il titolo originale è del film o della serietv
+    function verifica_titolo_originale(data, tipo) {
         var tit_or_card
 
         if (tipo == 'Film') {
@@ -288,4 +272,37 @@ $(document).ready(function() {
         }
     }
 
+    function sfumo_riassunto() {
+        // aggiungo la classe che mi permette di sfumare il riassunto del film se questo prende l'intera altezza del contenuto
+        $('.overview').each(function() {
+            var modHeight = 127;
+            if ($(this).outerHeight() == modHeight) {
+                $(this).addClass('fade-down')
+            }
+        });
+    };
+
 });
+
+// function takeIDtv_takeCast(tv) {
+//
+//     var id,
+//     id = tv
+//     console.log(id);
+//
+//     $.ajax({
+//         'url': 'https://api.themoviedb.org/3/tv/'+ id + '/credits',
+//         'method': 'GET',
+//         'data': {
+//             'api_key': '33f393bb2180fe0fa6a89d6419146443',
+//         },
+//         'success': function (nomi) {
+//             var cast_array = nomi.cast;
+//             console.log(cast_array);
+//
+//         },
+//         'error': function() {
+//             console.log('errore nella chiamata');
+//         }
+//     });
+// }
