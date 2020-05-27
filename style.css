@@ -7,12 +7,7 @@
 
 body {
     background-color: #221f1f;
-    /* background-image: url('img/netlfix-backgorund.jpg');
-    filter: opacity(0.6);
-    background-repeat: no-repeat;
-    background-size: cover; */
 }
-
 
 .cont {
     height: 100%;
@@ -20,6 +15,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 header {
@@ -36,9 +32,68 @@ header {
 }
 
 .input-group {
-    width: 60%;
     align-content: center;
     margin-right: 15px;
+    transition: all 0.8s ease;
+}
+
+.input-group-append {
+    position: absolute;
+    bottom: -32px;
+    right: 0;
+}
+
+.input-group>.input-group-append>.btn {
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+}
+
+.btn-outline-secondary {
+    width: 70px;
+    height: 70px;
+    background: #e50914;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 17px;
+    color: #fff;
+    transition: all 0.8s ease;
+}
+
+.btn-outline-secondary.animate {
+    transform: rotate(-360deg);
+    z-index: 3
+    /* right: 100px; */
+}
+
+.btn-outline-secondary:hover {
+    color: #fff;
+    background-color: #85203b;
+    border-color: #85203b;
+}
+
+.btn:focus, .btn-outline-secondary:focus {
+    box-shadow: none;
+}
+
+#message {
+    height: 53px;
+    padding: 0 20px;
+    outline: none;
+    font-size: 15px;
+    border-radius: 50px;
+    background-color: #221f1f;
+    color: #f5f5f1;
+    border: 3px solid #85203b;
+    transition: all 0.8s ease;
+    position: absolute;
+    top: -29px;
+    right: 15px;
+}
+
+.form-control.active {
+    width: 350px;
+    right: 100px;
+    /* right: 100px; */
 }
 
 .mb-3 {
@@ -81,6 +136,10 @@ header {
     transition: all ease 0.7s;
 }
 
+.two, p {
+    font-size: 14px;
+}
+
 .poster {
     cursor: pointer;
     position: absolute;
@@ -102,7 +161,7 @@ header {
 }
 
 .overview {
-    max-height: 127px;
+    max-height: 150px;
     overflow-y: hidden;
     text-overflow: ellipsis;
 }
@@ -111,6 +170,7 @@ header {
     background: -webkit-linear-gradient( #ffffff, #ededed, #221f1f);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    font-weight: bold;
 }
 
 h6, p {

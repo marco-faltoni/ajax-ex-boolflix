@@ -20,9 +20,9 @@
                 </div>
 
                 <div class="input-group mb-3">
-                    <input id="message" type="text" class="form-control" placeholder="Search Movies..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <input id="message" type="text" class="form-control" placeholder="Cerca e premi INVIO..." aria-label="Recipient's username" aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button">Search</button>
+                        <button class="btn btn-outline-secondary" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 <div class="card-header"><h5>Titolo: <span>{{ titolo }}</span></h5></div>
                 <div class="card-body">
                     <h6 class="card-title">Titolo originale: <span>{{titolo_originale}}</span></h6>
-                    <h6 class="card-title">Tipo: <span>{{{ tipo }}}</span></h6>
+                    <h6 class="card-title two">Tipo: <span>{{{ tipo }}}</span></h6>
                     <p class="card-text overview">Riassunto: <span>{{{overview}}}</span></p>
                     <p class="card-text cast" data-id = "{{{ id }}}" >Cast: <span></span></p>
                     <p class="card-text">Lingua: <span>{{{lingua}}}</span></p>

@@ -13,10 +13,17 @@ $(document).ready(function() {
         }
     });
 
-    // intercetto il click sul pulsante di ricerca
-    $('.btn-outline-secondary').click(function() {
-            ricerca();
+    // // intercetto il click sul pulsante di ricerca
+    // $('.btn-outline-secondary').click(function() {
+    //         ricerca();
+    // });
+
+    $(".btn-outline-secondary").click(function(){
+        $(".form-control").toggleClass("active").focus;
+        $(this).toggleClass("animate");
+        $("#message").val("");
     });
+
 
     // funzione per effettuare una ricerca
     function ricerca() {
@@ -51,7 +58,6 @@ $(document).ready(function() {
                         var risultato_corrente = risultati[i];
 
                         disegno_card(risultato_corrente, 'Film', risultato_corrente.poster_path, risultato_corrente.id);
-
                     }
 
                     sfumo_riassunto()
@@ -84,8 +90,6 @@ $(document).ready(function() {
                         var risultato_corrente = risultati[i];
 
                         disegno_card(risultato_corrente, 'Serie Tv', risultato_corrente.poster_path, risultato_corrente.id);
-
-                        // takeIDtv_takeCast(risultato_corrente.id);
                     }
 
                     sfumo_riassunto()
@@ -173,7 +177,6 @@ $(document).ready(function() {
         // creo due variabili che mi servono nel ciclo for
         var thisfilm;
         var nameactor;
-
         // console.log('film ' + id);
 
         // creo variabile con valore 5 perchè mi servono massimo 5 attori
@@ -183,7 +186,6 @@ $(document).ready(function() {
         if (cast.length < num) {
             num = cast.length
         }
-
         // imposto la condizione che se il cast è vuoto, appendo in pagina la scritta "non disponibile"
         if (num == 0) {
             $('.cast[data-id='+id+']').append('non disponibile');
@@ -213,7 +215,7 @@ $(document).ready(function() {
     // funzione che mi gestisce i riassunti
     function overview(testo) {
         if (testo == '') {
-            return 'Non disponibile'
+            return 'non disponibile'
         }
         return testo
 
@@ -275,7 +277,7 @@ $(document).ready(function() {
     function sfumo_riassunto() {
         // aggiungo la classe che mi permette di sfumare il riassunto del film se questo prende l'intera altezza del contenuto
         $('.overview').each(function() {
-            var modHeight = 127;
+            var modHeight = 150;
             if ($(this).outerHeight() == modHeight) {
                 $(this).addClass('fade-down')
             }
