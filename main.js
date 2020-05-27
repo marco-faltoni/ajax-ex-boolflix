@@ -49,10 +49,12 @@ $(document).ready(function() {
                     for (var i = 0; i < risultati.length; i++) {
                         // recupero il risultato corrente
                         var risultato_corrente = risultati[i];
-                        console.log(risultato_corrente.original_language);
+
                         disegno_card(risultato_corrente, 'Film', risultato_corrente.poster_path);
+
+                        takeIDfilm_takeCast(risultato_corrente.id);
                     }
-                    
+
                     sfumo_riassunto()
                 },
                 'error': function() {
@@ -81,7 +83,10 @@ $(document).ready(function() {
                     for (var i = 0; i < risultati.length; i++) {
                         // recupero il risultato corrente
                         var risultato_corrente = risultati[i];
+
                         disegno_card(risultato_corrente, 'Serie Tv', risultato_corrente.poster_path);
+
+                        takeIDtv_takeCast(risultato_corrente.id);
                     }
 
                     sfumo_riassunto()
@@ -96,6 +101,70 @@ $(document).ready(function() {
             alert('devi digitare almeno 2 caratteri');
         }
     };
+
+    function takeIDfilm_takeCast(film){
+        var id,
+        id = film
+        console.log(id);
+
+        $.ajax({
+            'url': 'https://api.themoviedb.org/3/movie/'+ id + '/credits',
+            'method': 'GET',
+            'data': {
+                'api_key': '33f393bb2180fe0fa6a89d6419146443',
+            },
+            'success': function (nomi) {
+                var cast_array = nomi.cast;
+                console.log(risultati);
+                // ciclo su tutti i risultati
+                actor(cast_array);
+
+            },
+            'error': function() {
+                console.log('errore nella chiamata');
+            }
+        });
+
+    }
+
+    function actor(cast) {
+
+        var actors =[]
+        var thisfilm;
+        var nameactor;
+
+        for (var i = 0; i < cast.length; i++) {
+            // recupero il risultato corrente
+            thisfilm = cast[i];
+            nameactor = thisfilm.name;
+            actors.push(nameactor);
+        }
+
+        return actors
+    }
+
+    function takeIDtv_takeCast(tv) {
+
+        var id,
+        id = tv
+        console.log(id);
+
+        $.ajax({
+            'url': 'https://api.themoviedb.org/3/tv/'+ id + '/credits',
+            'method': 'GET',
+            'data': {
+                'api_key': '33f393bb2180fe0fa6a89d6419146443',
+            },
+            'success': function (nomi) {
+                var cast_array = nomi.cast;
+                console.log(risultati);
+                
+            },
+            'error': function() {
+                console.log('errore nella chiamata');
+            }
+        });
+    }
 
     // funzione per resettare la pagina e prepararla all'inserimento di nuovi risultati
     function reset_risultati() {
