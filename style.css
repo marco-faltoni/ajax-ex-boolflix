@@ -190,7 +190,7 @@ h5 span {
 @keyframes beating {
   0%
   {
-    transform: scale( .75 );
+    transform: scale( .80 );
   }
   20%
   {
@@ -198,7 +198,7 @@ h5 span {
   }
   40%
   {
-    transform: scale( .75 );
+    transform: scale( .80 );
   }
   60%
   {
@@ -206,11 +206,11 @@ h5 span {
   }
   80%
   {
-    transform: scale( .75 );
+    transform: scale( .80 );
   }
   100%
   {
-    transform: scale( .75 );
+    transform: scale( .80 );
   }
 }
 
