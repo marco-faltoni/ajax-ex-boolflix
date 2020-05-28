@@ -19,6 +19,7 @@ $(document).ready(function() {
     // });
 
     $(".btn-outline-secondary").click(function(){
+        $('.input-group-append').toggleClass('beat');
         $(".form-control").toggleClass("active").focus;
         $(this).toggleClass("animate");
         $("#message").val("");

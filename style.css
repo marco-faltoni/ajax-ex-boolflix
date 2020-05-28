@@ -35,12 +35,18 @@ header {
     align-content: center;
     margin-right: 15px;
     transition: all 0.8s ease;
+
 }
 
 .input-group-append {
     position: absolute;
     bottom: -32px;
     right: 0;
+    z-index: 3
+}
+
+.beat {
+    animation: beating 4s infinite;
 }
 
 .input-group>.input-group-append>.btn {
@@ -179,6 +185,33 @@ h6, p {
 
 h5 span {
     font-weight: 700;
+}
+
+@keyframes beating {
+  0%
+  {
+    transform: scale( .75 );
+  }
+  20%
+  {
+    transform: scale( 1 );
+  }
+  40%
+  {
+    transform: scale( .75 );
+  }
+  60%
+  {
+    transform: scale( 1 );
+  }
+  80%
+  {
+    transform: scale( .75 );
+  }
+  100%
+  {
+    transform: scale( .75 );
+  }
 }
 
 @media all and (max-width: 320px) {
