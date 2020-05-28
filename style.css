@@ -16,6 +16,7 @@ body {
     justify-content: space-between;
     align-items: center;
     position: relative;
+    box-shadow: 2px 2px 10px #221f1f;
 }
 
 header {
@@ -62,6 +63,7 @@ header {
     text-align: center;
     font-size: 17px;
     color: #fff;
+    border-color: #e50914;
     transition: all 0.8s ease;
 }
 
@@ -102,6 +104,13 @@ header {
     /* right: 100px; */
 }
 
+.form-control:focus {
+    width: 350px;
+    right: 100px;
+    box-shadow: 2px 2px 10px black;
+    /* right: 100px; */
+}
+
 .mb-3 {
     margin-bottom: 0 !important;
 }
@@ -118,14 +127,24 @@ header {
 }
 
 .titolo-ricerca {
+    display: none;
+    background-color: #221f1f;
+    box-shadow: 2px 2px 10px #221f1f;
     color: white;
+    font-size: 22px;
+    border-radius: .25rem;
     margin-bottom: 20px;
     margin-left: 10px;
-    display: none;
+    padding: 10px;
 }
 
 .titolo-ricerca.visible {
-    display: block;
+    display: inline-block;
+}
+
+#ricerca-utente {
+    font-style: italic;
+    font-weight: bold;
 }
 
 #results {
@@ -139,11 +158,20 @@ header {
     height: 500px;
     margin: 20px 10px;
     background-color: #221f1f!important;
+    box-shadow: 2px 2px 10px #221f1f;
     transition: all ease 0.7s;
 }
 
 .two, p {
     font-size: 14px;
+}
+
+.vanish {
+    max-height: 43px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .poster {
@@ -164,10 +192,11 @@ header {
 
 .card:hover {
     transform: scale(1.05);
+    box-shadow: 2px 2px 30px #221f1f;
 }
 
 .overview {
-    max-height: 150px;
+    max-height: 135px;
     overflow-y: hidden;
     text-overflow: ellipsis;
 }

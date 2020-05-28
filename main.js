@@ -1,5 +1,5 @@
-// Milestone   1: Creare un layout base con una searchbar (una   input   e   un   button) in cui   possiamo scrivere  completamente  o  parzialmente  il   nome   di   un   film.   Possiamo,   cliccando   il bottone,   cercare   sull’API   tutti   i   film   che   contengono   ciò   che   ha   scritto   l’utente. Vogliamo   dopo   la   risposta   dell’API   visualizzare   a   schermo   i   seguenti   valori   per   ogni film   trovato: 1.Titolo 2.Titolo   Originale 3.Lingua 4.Voto
 
+// inizio
 $(document).ready(function() {
 
     // preparo le variabili per handlebars
@@ -52,7 +52,8 @@ $(document).ready(function() {
 
                     // recupero i risultati della ricerca
                     var risultati = risposta.results;
-                    console.log(risultati);
+                    // console.log(risultati);
+
                     // ciclo su tutti i risultati
                     for (var i = 0; i < risultati.length; i++) {
                         // recupero il risultato corrente
@@ -84,7 +85,8 @@ $(document).ready(function() {
 
                     // recupero i risultati della ricerca
                     var risultati = risposta.results;
-                    console.log(risultati);
+                    // console.log(risultati);
+
                     // ciclo su tutti i risultati
                     for (var i = 0; i < risultati.length; i++) {
                         // recupero il risultato corrente
@@ -278,7 +280,7 @@ $(document).ready(function() {
     function sfumo_riassunto() {
         // aggiungo la classe che mi permette di sfumare il riassunto del film se questo prende l'intera altezza del contenuto
         $('.overview').each(function() {
-            var modHeight = 150;
+            var modHeight = 135;
             if ($(this).outerHeight() == modHeight) {
                 $(this).addClass('fade-down')
             }
@@ -286,26 +288,3 @@ $(document).ready(function() {
     };
 
 });
-
-// function takeIDtv_takeCast(tv) {
-//
-//     var id,
-//     id = tv
-//     console.log(id);
-//
-//     $.ajax({
-//         'url': 'https://api.themoviedb.org/3/tv/'+ id + '/credits',
-//         'method': 'GET',
-//         'data': {
-//             'api_key': '33f393bb2180fe0fa6a89d6419146443',
-//         },
-//         'success': function (nomi) {
-//             var cast_array = nomi.cast;
-//             console.log(cast_array);
-//
-//         },
-//         'error': function() {
-//             console.log('errore nella chiamata');
-//         }
-//     });
-// }
